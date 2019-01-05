@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- BEGIN META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Custom Theme">
+    <!-- END META -->
+    
+    <!-- BEGIN SHORTCUT ICON -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <!-- END SHORTCUT ICON -->
+    <title>
+      登录
+    </title>
+    <!-- BEGIN STYLESHEET-->
+		<link href="css/bootstrap.min.css" rel="stylesheet"><!-- BOOTSTRAP CSS -->
+		<link href="css/bootstrap-reset.css" rel="stylesheet"><!-- BOOTSTRAP CSS -->
+		<link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet"><!-- FONT AWESOME ICON CSS -->
+		<link href="css/style.css" rel="stylesheet"><!-- THEME BASIC CSS -->
+		<link href="css/style-responsive.css" rel="stylesheet"><!-- THEME RESPONSIVE CSS -->
+    <!--[if lt IE 9]>
+<script src="js/html5shiv.js">
+</script>
+<script src="js/respond.min.js">
+</script>
+<![endif]-->
+     <!-- END STYLESHEET-->
+  </head>
+  <body class="login-screen">
+    <!-- BEGIN SECTION -->
+    <div class="container">
+      <form class="form-signin" id="loginForm">
+        <h2 class="form-signin-heading">
+          管理员登录
+        </h2>
+		<!-- LOGIN WRAPPER  -->
+        <div class="login-wrap">
+          <input type="text" name="account" id="account" class="form-control" placeholder="用户名" autofocus>
+          <input type="password" name="password" id="password" class="form-control" placeholder="密码">
+
+          <a class="btn btn-lg btn-login btn-block" href="javascript:void(0)" onclick="submitForm()">
+            登录
+          </a>
+            <span id="message" class="pull-right" style="color: red;"></span>
+        </div>
+
+		<!-- END LOGIN WRAPPER -->
+      </form>
+    </div>
+    <!-- END SECTION -->
+    <!-- BEGIN JS -->
+    <script src="js/jquery-3.2.0.min.js" ></script><!-- BASIC JQUERY LIB. JS -->
+	<script src="js/bootstrap.min.js" ></script><!-- BOOTSTRAP JS -->
+    <script src="js/footer.js"></script><!-- COMMON FOOTER JS -->
+    <script src="js/debug.js"></script><!-- DEBUG JS -->
+    <script src="js/tool.js"></script><!-- TOOL JS -->
+
+    <script>
+        function submitForm()
+        {
+            var formData = $('#loginForm').serialize();
+            log("formdata", formData);
+
+            var jqxhr = $.ajax(
+                {
+                    method: "POST",
+                    url: "method/UserLogin.ashx",
+                    data: formData,
+                    dataType: "json"
+                });
+
+            jqxhr.done(function (data) {
+                log("response", "done");
+                log("response", data.success);
+                if (data.success == true)
+                {
+                    log("response", "Login success.");
+                    setCookie("token", data.message.Token,30);
+                    setCookie("expire", data.message.Expire, 30);
+                    setCookie("accountid", data.message.AccountID);
+					setCookie("username",data.message.Username,30);
+
+                    window.location.href = data.message.Redirect;
+                }else
+                {
+                    log("response", "Login failed.");
+                    if (data.message.ErrorMessage == null)
+                    {
+                        log("response", "未知错误：" + data.message);
+						$('#message').text("登录失败：服务器错误").show().fadeOut(2000, "linear");
+
+                    } else {
+                        $('#message').text(data.message.ErrorMessage).show().fadeOut(2000, "linear");
+                    }
+                }
+            });
+
+            jqxhr.fail(function () {
+                log("response", "error");
+            });
+
+            jqxhr.always(function () {
+                log("response", "finished");
+            });
+
+            /*
+
+            $('#loginForm').form('submit', {
+                url: 'method/UserLogin.aspx',
+                cache: false,
+                success: function (data) {
+                    log("Response", data);
+                    var response = $.parseJSON(data);
+                    if (response.success) {
+
+                        //window.location.href = "console.html";
+                        return true;
+                    }
+
+                    $.messager.alert('惠普渠道服务网络', '登录失败', 'error');
+                }
+            });
+            */
+        }
+
+    </script>
+    <!-- END JS -->
+  </body>
+</html>
+

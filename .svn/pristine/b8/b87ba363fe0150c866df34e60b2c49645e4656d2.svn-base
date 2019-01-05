@@ -1,0 +1,47 @@
+﻿using OliveFramework.Page;
+using OliveFramework.Model.Request;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.method
+{
+    /// <summary>
+    /// NewMerchantOrder 的摘要说明
+    /// </summary>
+    public class NewMerchantOrder : BasePage
+    {
+        protected override void OnRequest()
+        {
+            base.OnRequest();
+
+            try
+            {
+                MerchantOrderDetail orderDetail = getModel<MerchantOrderDetail>("model");
+
+                /*
+                MerchantOrderDetail orderDetail = new MerchantOrderDetail();
+                orderDetail.amount = 1234;
+                orderDetail.amounttype = 0;
+                orderDetail.buyerid = 11;
+                orderDetail.comment = "按时发货";
+                orderDetail.merchantid = 1;
+                orderDetail.orderdate = DateTime.Now;
+                orderDetail.orderlist = "圆钢1吨，角钢1吨";
+                */
+
+                string OrderID=Controller.Order.Instance.NewMerchantOrder(orderDetail);
+
+                WriteSuccess<string>(OrderID);
+            }catch(Exception ex)
+            {
+                WriteException(ex);
+            }
+
+        }
+
+
+
+    }
+}

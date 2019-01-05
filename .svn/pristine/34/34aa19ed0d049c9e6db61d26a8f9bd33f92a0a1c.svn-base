@@ -1,0 +1,75 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/jeasyui.Master" AutoEventWireup="true" CodeBehind="MerchantManager.aspx.cs" Inherits="OliveFramework.WebForm2" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="BodyContent" runat="server">
+    
+    <table id="dg" class="easyui-datagrid" title="全部安装单"
+        data-options="rownumbers:true,
+                      singleSelect:false,
+                      selectOnCheck:true,
+                      checkOnSelect:true,
+                      fit:true,
+                      fitColumns:true,
+                      pagination:true,
+                      pageSize:20,
+                      idField:'order_id'" 
+        toolbar="#tb">
+        <thead>
+            <tr>
+                <th data-options="field:'ck',checkbox:true"></th>
+                <th data-options="field:'merchant_name'">商户名称</th>
+                <th data-options="field:'merchant_contact'">联系方式</th>
+                <th data-options="field:'merchant_website'">网站</th>
+                <th data-options="field:'merchant_description'">简介</th>
+            </tr>
+        </thead>
+    </table>
+
+
+    <div id="tb" style="padding: 2px 5px;">
+        省份：<input class="easyui-combobox" id="province" name="province" style="width: 150px;" data-options="
+                    valueField:'statusid',
+                    textField:'status_description',
+                    panelHeight:'auto'
+                    ">
+        |
+        市场：<input class="easyui-combobox" id="market" name="market" style="width: 150px;" data-options="
+            valueField:'statusid',
+            textField:'status_description',
+            panelHeight:'auto'
+            ">
+        <a href="javascript::void();" class="easyui-linkbutton" onclick="addMarket_OnClick();">添加市场</a>
+        |
+                规格：<input class="easyui-combobox" id="product" name="product" style="width: 150px;" data-options="
+            valueField:'statusid',
+            textField:'status_description',
+            panelHeight:'auto'
+            ">
+                    
+            <a href="javascript::void();" class="easyui-linkbutton" onclick="addProduct_OnClick();">添加规格</a>
+<br />
+
+
+        <a href="javascript::void();" class="easyui-linkbutton" iconcls="icon-search" onclick="showSearchWindow();">查找商户</a>
+        |
+        <a href="javascript::void();" class="easyui-linkbutton" iconcls="icon-add" onclick="addMerchant_OnClick();">新建商户</a>
+        |
+        <a href="javascript::void();" class="easyui-linkbutton" iconcls="icon-edit" onclick="modifyMerchant_OnClick();">修改商户</a>
+        |
+        <a href="javascript::void();" class="easyui-linkbutton" iconcls="icon-remove" onclick="deleteMerchant_OnClick();">删除商户</a>
+        
+
+
+
+    </div>
+
+    <div id="ft" style="padding: 2px 5px;">
+        <a href="#" class="easyui-linkbutton" iconcls="icon-add" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconcls="icon-edit" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconcls="icon-save" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconcls="icon-cut" plain="true"></a>
+        <a href="#" class="easyui-linkbutton" iconcls="icon-remove" plain="true"></a>
+    </div>
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="FormContent" runat="server">
+</asp:Content>

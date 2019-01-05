@@ -1,0 +1,43 @@
+﻿using OliveFramework.Page;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.method
+{
+    /// <summary>
+    /// AddMerchantToFavorite 的摘要说明
+    /// </summary>
+    public class AddMerchantToFavorite : BasePage
+    {
+
+        protected override void OnRequest()
+        {
+            base.OnRequest();
+
+            uint merchantID = 0;
+
+            if (IsSetParameter("merchant_id"))
+            {
+                merchantID = uint.Parse(getParameter("merchant_id"));
+            }else
+            {
+                WriteFail("/language/favorite/need_merchant_id");
+                WriteEnd();
+            }
+
+            try
+            {
+                Controller.Favorite.Instance.AddMerchant(aid, merchantID);
+                WriteSuccess<String>("添加成功");
+            }catch(Exception ex)
+            {
+                WriteException(ex);
+            }
+
+        }
+
+
+    }
+}

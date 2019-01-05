@@ -1,0 +1,73 @@
+﻿using OliveFramework.Controller;
+using OliveFramework.Model.Datatable;
+using OliveFramework.Model.Response;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.Controller
+{
+    public class Ad: BaseController
+    {
+        private static Ad _instance = null;
+        public static Ad Instance
+        {
+            set
+            {
+
+            }
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Ad();
+                }
+                return _instance;
+            }
+        }
+
+        /// <summary>
+        /// 获取广告列表
+        /// </summary>
+        /// <param name="PageLevel"></param>
+        /// <returns></returns>
+        public AdListModel GetAdList(int? PageLevel)
+        {
+            //List<Dictionary<string, string>> list=new List<Dictionary<string, string>>();
+
+            List<AdModel> list = null;
+
+            if (PageLevel!=null)
+            {
+                string where = String.Format(" ad.PageLevel={0}", PageLevel);
+                list = db.SelectData<AdModel>("ad", where);
+            }else
+            {
+                list = db.SelectData<AdModel>("ad");
+            }
+
+            
+            AdListModel adList = new AdListModel();
+
+            
+            foreach (AdModel ad in list)
+            {
+                ad.imgsrc= SystemConfig.WebappURL + SystemConfig.AdUploadPath + ad.imgsrc;
+                adList.Add(ad);
+
+                //dictionary<string, string> map = new dictionary<string, string>();
+                //map.add("link", ad.imglink);
+
+                //string imgsrc =systemconfig.webappurl + systemconfig.aduploadpath+ ad.imgsrc;
+                //map.add("source", imgsrc);
+
+                //list.add(map);
+            }
+            
+            
+            return adList;
+        }
+ 
+    }
+}

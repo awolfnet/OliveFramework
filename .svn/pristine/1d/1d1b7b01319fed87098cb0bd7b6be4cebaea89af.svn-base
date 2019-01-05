@@ -1,0 +1,53 @@
+﻿using OliveFramework.Model.Datatable;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.Controller
+{
+    public class Configure:BaseController
+    {
+        private static Configure _instance = null;
+        public static Configure Instance
+        {
+            set
+            {
+
+            }
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Configure();
+                }
+                return _instance;
+            }
+        }
+
+
+        public T get<T>(string KEY)
+        {
+            string where = string.Format("KEY={0}", KEY);
+
+            List<ConfigureModel> list=db.SelectData<ConfigureModel>("Configure");
+
+            if(list==null)
+            {
+                throw new ExceptionMessage("/language/config/configkey_not_found");
+            }
+
+            
+
+            T t = Activator.CreateInstance<T>();
+
+            
+            List<int> l = new List<int>();
+            l[0] = 1;
+            l.Add(1);
+
+            return (T)t;
+        }
+            
+    }
+}

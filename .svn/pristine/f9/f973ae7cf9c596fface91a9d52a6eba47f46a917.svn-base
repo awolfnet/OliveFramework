@@ -1,0 +1,41 @@
+﻿using OliveFramework.Model.Request;
+using OliveFramework.Page;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.method
+{
+    /// <summary>
+    /// SendChat 的摘要说明
+    /// </summary>
+    public class SendChat : BasePage
+    {
+        protected override void OnRequest()
+        {
+            base.OnRequest();
+
+            ChatContent chatContent = getModel<ChatContent>();
+
+            try
+            {
+                if (chatContent != null)
+                {
+                    new Controller.Message().AddMessage(chatContent.userid, chatContent.content, this.aid, Controller.Message.MESSAGE_STATUS.UNREACH, Controller.Message.MESSAGE_STYLE.INFORMATION, "Chat", Controller.Message.MESSAGE_TYPE.CHAT);
+                    WriteSuccess<string>("发送成功");
+                }else
+                {
+                    WriteUnfulfil("");
+                }
+            }
+            catch (Exception ex)
+            {
+                WriteException(ex);
+            }
+            
+
+        }
+
+    }
+}

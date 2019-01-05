@@ -1,0 +1,83 @@
+﻿using OliveFramework.Model.Datatable;
+using OliveFramework.Model.Response;
+using OliveFramework.tool;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.Controller
+{
+    public class Favorite: BaseController
+    {
+        private static Favorite _instance = null;
+        public static Favorite Instance
+        {
+            set
+            {
+
+            }
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Favorite();
+                }
+                return _instance;
+            }
+        }
+
+
+        public void AddMerchant(uint userID,uint merchantID)
+        {
+            FavoriteModel favoriteInfo = new FavoriteModel();
+            favoriteInfo.aid = userID;
+            favoriteInfo.merchantid = merchantID;
+            try
+            {
+                db.InsertSingleLine<FavoriteModel>("favorite", favoriteInfo);
+            }catch(Database.Exception ex)
+            {
+                switch(ex.Code)
+                {
+                    case 1062:
+                        throw new UnfulfilException("/language/database/duplicate_entry");
+                    default:throw(ex);
+                }
+            }
+            
+        }
+
+        public void RemoveMerchant(uint userID,uint favoriteID)
+        {
+
+        }
+
+        public FavoriteListModel GetFavoriteList(uint userID)
+        {
+            List<ViewFavoriteListModel> list;
+
+            String where = String.Format("view_favoritelist.aid={0}", userID);
+
+            try
+            {
+                list = db.SelectData<ViewFavoriteListModel>("view_favoritelist", where);
+            }catch (Database.Exception ex)
+            {
+                switch (ex.Code)
+                {
+                    case 1062:
+                        throw new UnfulfilException("/language/database/duplicate_entry");
+                    default: throw (ex);
+                }
+            }
+
+            FavoriteListModel favoriteList = new FavoriteListModel();
+            foreach(ViewFavoriteListModel favorite in list)
+            {
+                favoriteList.Add(favorite);
+            }
+            return favoriteList;
+        }
+    }
+}

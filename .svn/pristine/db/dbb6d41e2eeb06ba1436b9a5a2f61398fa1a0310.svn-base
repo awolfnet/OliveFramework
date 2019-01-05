@@ -1,0 +1,37 @@
+﻿using OliveFramework.Model.Response;
+using OliveFramework.Page;
+using OliveFramework.tool;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.method
+{
+    /// <summary>
+    /// GetMerchantList 的摘要说明
+    /// </summary>
+    public class GetMerchantList : BasePage
+    {
+
+        protected override void OnRequest()
+        {
+            base.OnRequest();
+
+            string productName = getParameter("product_name");
+            string marketName = getParameter("market_name");
+
+            MerchantListModel merchantList = Controller.Merchant.Instance.GetMerchantList(productName, marketName);
+
+            if(merchantList==null)
+            {
+                WriteUnfulfil(Lang.get("/language/database/no_record"));
+            }else
+            {
+                WriteSuccess<MerchantListModel>(merchantList);
+            }
+            
+
+        }
+    }
+}

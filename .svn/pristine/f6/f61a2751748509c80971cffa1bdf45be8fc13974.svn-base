@@ -1,0 +1,40 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="jeasyui.master.cs" Inherits="OliveFramework.jeasyui" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="jeasyui/themes/metro-blue/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jeasyui/themes/icon.css">
+    <script type="text/javascript" src="js/header.js"></script>
+    <script type="text/javascript" src="jeasyui/jquery.min.js"></script>
+    <script type="text/javascript" src="jeasyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="jeasyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="js/tool.js"></script>
+    <script type="text/javascript" src="js/jParameters.ashx"></script>
+
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body class="easyui-layout">
+    <script type="text/javascript">
+        //createMaskPanel();
+        //createLoadingPanel();
+        //setLoadingTitle("正在加载");
+
+        //$('#loading-div').show();
+        //$('#loading-div-msg').show();
+    </script>
+    <asp:ContentPlaceHolder ID="BodyContent" runat="server">
+    </asp:ContentPlaceHolder>
+
+    <form id="form1" runat="server">
+        <div>
+            <asp:ContentPlaceHolder ID="FormContent" runat="server"></asp:ContentPlaceHolder>
+        </div>
+    </form>
+</body>
+<script type="text/javascript" src="js/footer.js"></script>
+</html>

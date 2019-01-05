@@ -1,0 +1,42 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Web;
+
+namespace OliveFramework.tool
+{
+    public class WebConfig
+    {
+        public static string get(string configKey)
+        {
+                return ConfigurationManager.AppSettings[configKey];
+        }
+
+        public static bool isset(string configKey)
+        {
+            if (ConfigurationManager.AppSettings[configKey] != null)
+                return true;
+            else
+                return false;
+        }
+
+        /// <summary>
+        /// 网站物理路径
+        /// </summary>
+        public static string AppDomainAppPath
+        {
+            get
+            {
+                string WebPath = "";
+                if(isset("webpath"))
+                {
+                    WebPath = get("webpath");
+                }else
+                {
+                    WebPath = HttpRuntime.AppDomainAppPath;
+                }
+                return WebPath;
+            }
+        }
+    }
+}

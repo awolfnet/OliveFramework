@@ -1,0 +1,75 @@
+﻿using OliveFramework.Model.Datatable;
+using OliveFramework.Model.Response;
+using OliveFramework.Page;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.method
+{
+    /// <summary>
+    /// CreateAccount 的摘要说明
+    /// </summary>
+    public class CreateAccount : BasePage
+    {
+        protected override void OnRequest()
+        {
+            string accountName = getParameter("new_account");
+            string accountPassword = getParameter("new_password");
+            string accountMail = getParameter("new_mail");
+
+            uint aid = 0;
+            SessionModel session = null;
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(accountName) && string.IsNullOrWhiteSpace(accountMail))
+                {
+                    throw new ExceptionMessage("/language/register/need_account_name");
+                }
+
+                if (string.IsNullOrWhiteSpace(accountPassword))
+                {
+                    throw new ExceptionMessage("/language/register/need_password");
+                }
+
+                AccountModel account = new AccountModel();
+                account.Name = accountName;
+                account.Password = accountPassword;
+                account.Mail = accountMail;
+
+                aid = Controller.Account.Instance.AddAccount(account);
+                session = Controller.Session.Instance.CreateSession(accountName, aid);
+
+                LoginResponseModel userLogin = new LoginResponseModel();
+                userLogin.AccountID = aid;
+                userLogin.Username = accountName;
+                userLogin.Token = session.Token;
+                userLogin.Expire = session.ValidDay.ToString();
+
+                userLogin.Redirect = "Main.html";
+
+                WriteSuccess<LoginResponseModel>(userLogin);
+            }
+            catch (UnfulfilException ex)
+            {
+                WriteUnfulfil(ex.DisplayMessage);
+            }
+            catch (ExceptionMessage ex)
+            {
+                WriteFail(ex.Code, ex.DisplayMessage);
+            }
+            catch (Exception ex)
+            {
+                WriteException(ex);
+            }
+            finally
+            {
+
+            }
+        }
+
+
+    }
+}

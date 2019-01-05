@@ -1,0 +1,7 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/jeasyui.Master" AutoEventWireup="true" CodeBehind="AccountManager.aspx.cs" Inherits="OliveFramework.AccountManager" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="BodyContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content3" ContentPlaceHolderID="FormContent" runat="server">
+</asp:Content>

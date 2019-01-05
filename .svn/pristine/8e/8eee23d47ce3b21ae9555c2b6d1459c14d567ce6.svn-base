@@ -1,0 +1,43 @@
+﻿using OliveFramework.Model.Request;
+using OliveFramework.Page;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.method
+{
+    /// <summary>
+    /// NewCargoOrder 的摘要说明
+    /// </summary>
+    public class NewCargoOrder : BasePage
+    {
+        protected override void OnRequest()
+        {
+            base.OnRequest();
+
+            try
+            {
+                CargoOrderDetail orderDetail = getModel<CargoOrderDetail>("model");
+
+                /*
+                CargoOrderDetail orderDetail = new CargoOrderDetail();
+                orderDetail.amount = 1234;
+                orderDetail.buyerid = 11;
+                orderDetail.comment = "按时发货";
+                orderDetail.cargoid = 1;
+                orderDetail.orderdate = DateTime.Now;
+                */
+                
+
+                string OrderID = Controller.Order.Instance.NewCargoOrder(orderDetail);
+
+                WriteSuccess<string>(OrderID);
+            }
+            catch (Exception ex)
+            {
+                WriteException(ex);
+            }
+        }
+    }
+}

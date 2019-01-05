@@ -1,0 +1,60 @@
+﻿using OliveFramework.Model.Datatable;
+using OliveFramework.Model.Response;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.Controller
+{
+    public class Market: BaseController
+    {
+
+        private static Market _instance = null;
+        public static Market Instance
+        {
+            set
+            {
+
+            }
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Market();
+                }
+                return _instance;
+            }
+        }
+
+        public MarketListModel GetMarketList(String marketLocation,String marketType)
+        {
+            string where = string.Format("market.location = '{0}' AND markettype.name = '{1}'", marketLocation, marketType);
+            string join = "INNER JOIN markettype ON market.markettypeid = markettype.typeid";
+
+            List<MarketModel> list = db.SelectData<MarketModel>("market", join, where);
+            MarketListModel marketList = new MarketListModel();
+            foreach(MarketModel market in list)
+            {
+                marketList.Add(market);
+            }
+            return marketList;
+        }
+
+        public ProductListModel GetProductList(String marketType)
+        {
+            string where = string.Format("markettype.name = '{0}'", marketType);
+            string join = "INNER JOIN markettype ON product.markettypeid = markettype.typeid";
+
+            List<ProductModel> list = db.SelectData<ProductModel>("product", join, where);
+
+            ProductListModel productList = new ProductListModel();
+            foreach(ProductModel product in list)
+            {
+                productList.Add(product);
+            }
+
+            return productList;
+        }
+    }
+}

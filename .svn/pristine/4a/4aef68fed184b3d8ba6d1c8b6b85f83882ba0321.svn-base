@@ -1,0 +1,64 @@
+﻿using OliveFramework.Model.Datatable;
+using OliveFramework.Model.Response;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace OliveFramework.Controller
+{
+    public class Cargo: BaseController
+    {
+        private static Cargo _instance = null;
+        public static Cargo Instance
+        {
+            set
+            {
+
+            }
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new Cargo();
+                }
+                return _instance;
+            }
+        }
+
+        public CargoListModel GetCargoList(String marketName,string cargoDescription)
+        {
+
+            string where = "";
+            if (!String.IsNullOrWhiteSpace(cargoDescription))
+            {
+                where += string.Format("view_cargolist.cargo_description LIKE '%{0}%'", cargoDescription);
+            }
+
+
+            if (!String.IsNullOrWhiteSpace(marketName))
+            {
+                if (!String.IsNullOrWhiteSpace(where))
+                    where += " AND ";
+
+                where += string.Format("view_cargolist.market_name = '{0}'", marketName);
+            }
+
+
+            List<CargoModel> list = db.SelectData<CargoModel>("view_cargolist", null, where, true);
+
+            if (list == null)
+            {
+                throw new UnfulfilException("/language/database/no_record");
+            }
+
+            CargoListModel cargoList = new CargoListModel();
+
+            foreach (CargoModel cargo in list)
+            {
+                cargoList.Add(cargo);
+            }
+            return cargoList;
+        }
+    }
+}
