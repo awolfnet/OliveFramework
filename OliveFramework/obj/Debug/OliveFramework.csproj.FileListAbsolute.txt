@@ -5,6 +5,6 @@ E:\visual studio 2015\Projects\OliveFramework\OliveFramework\bin\MySql.Data.dll
 E:\visual studio 2015\Projects\OliveFramework\OliveFramework\bin\Newtonsoft.Json.dll
 E:\visual studio 2015\Projects\OliveFramework\OliveFramework\bin\Newtonsoft.Json.pdb
 E:\visual studio 2015\Projects\OliveFramework\OliveFramework\bin\Newtonsoft.Json.xml
+E:\visual studio 2015\Projects\OliveFramework\OliveFramework\obj\Debug\OliveFramework.csprojResolveAssemblyReference.cache
 E:\visual studio 2015\Projects\OliveFramework\OliveFramework\obj\Debug\OliveFramework.dll
 E:\visual studio 2015\Projects\OliveFramework\OliveFramework\obj\Debug\OliveFramework.pdb
-E:\visual studio 2015\Projects\OliveFramework\OliveFramework\obj\Debug\OliveFramework.csprojResolveAssemblyReference.cache
