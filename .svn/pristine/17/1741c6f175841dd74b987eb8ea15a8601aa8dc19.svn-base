@@ -1,7 +1,0 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/jeasyui.Master" AutoEventWireup="true" CodeBehind="AdManager.aspx.cs" Inherits="OliveFramework.AdManager" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="BodyContent" runat="server">
-</asp:Content>
-<asp:Content ID="Content3" ContentPlaceHolderID="FormContent" runat="server">
-</asp:Content>

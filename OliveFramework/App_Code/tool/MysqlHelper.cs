@@ -60,6 +60,8 @@ namespace OliveFramework.tool
             connectionString.Password = pwd;
             connectionString.Database = db;
             connectionString.ConnectionTimeout = timeout;
+            //不使用连接池
+            connectionString.Pooling = false;
             return connectionString.GetConnectionString(true);
         }
 
